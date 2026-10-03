@@ -3,12 +3,18 @@ package br.edu.utfpr.pb.projeto_ecommerce.server.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
+@EnableWebSecurity
 @Configuration // indica para o spring que essa classe é de configuração
 public class WebSecurity {
+
+    //private final AuthService authService;
+    //private final AuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean // siginifica que o spring sera responsavel por manipular | criar o objeto quando solicitado
     public SecurityFilterChain filterChain(HttpSecurity http) { // cadeira de filtro de segurança
