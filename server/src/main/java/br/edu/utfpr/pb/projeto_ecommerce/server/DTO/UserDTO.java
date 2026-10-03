@@ -1,26 +1,23 @@
-package br.edu.utfpr.pb.projeto_ecommerce.server.model;
+package br.edu.utfpr.pb.projeto_ecommerce.server.DTO;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity // a anotação mais importante aqui determina que essa classe
-// nao vai ser uma simples classe e sim pode ser persistida no banco
-@Table(name = "tb_user") //na tabela tb_user
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class User {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class UserDTO {
 
     @NotBlank
     @Size(min = 4, max = 50) // tamanho min e maximo do body que vamos receber
-    @Column(length = 50) // indica para o hibernate que a coluna do banco vai ser varchar(50)
     private String username;
 
     @NotBlank // nao permite espaços vazios, nulos ou em branco
