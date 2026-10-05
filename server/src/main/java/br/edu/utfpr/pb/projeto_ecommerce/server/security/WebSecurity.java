@@ -40,7 +40,7 @@ public class WebSecurity {
     @SneakyThrows // serve meio que para diblar o serviço de ter que fazer throws Exception nas funções ou o famoso
     // try catch, ele diz, se dentro do filterChain qualquer metodo lançar uma exceção verificada para o java, retorne
     // sem eu precisar fazer o tratamento
-    public SecurityFilterChain filterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource) { // cadeira de filtro de segurança
+    public SecurityFilterChain filterChain(HttpSecurity http) { // cadeira de filtro de segurança
 
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -86,14 +86,7 @@ public class WebSecurity {
         );              // HeadersConfigurer.FrameOptionsConfig::disable -> e eu quero desativar essa protecao que a pagina nao
                         // possa ser reproduzida em frame
 
-        http // vai receber um objeto HTTP para realizarmos configurações de segurança
-                .csrf(AbstractHttpConfigurer::disable) // ISSO TAFALANDO ASSIM PRO SPRING
-                // Quando estiver configurando o .csrf que é um barramento de segurnaça
-                // deixa ele desabilitado .csrf(config -> config.disable())
-
-                .authorizeHttpRequests(auth -> auth // aqui estamos dizendo quais pessoas podem acessar
-                        .anyRequest().permitAll()// Todas as rotas sem necessidade de autenticação ou autorização
-                ); // nesse caso o auth é objeto que vai receber as config do Http Request
+        http.csrf(AbstractHttpConfigurer::disable);
 
         // aqui ele ta dizendo para o Spring habilite as configuraçÕes que eu defini
         // na função la embaixo em corsConfigurationSource();
