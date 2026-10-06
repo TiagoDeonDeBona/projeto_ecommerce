@@ -50,6 +50,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                 getAuthentication(request);
 
         //Adiciona o usuário autenticado no contexto do spring security
+        // vamos usar depois para pegar id do usuario para colocar no pedido
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
     }
