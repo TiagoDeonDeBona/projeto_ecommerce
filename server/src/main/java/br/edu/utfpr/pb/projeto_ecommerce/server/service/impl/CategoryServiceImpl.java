@@ -27,12 +27,6 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Page<Category> findAll(Pageable pageable) {
-        return this.categoryRepository.findAll(pageable);
-    }
-
-    @Override
     public Category save(Category category) {
         return this.categoryRepository.save(category);
     }
@@ -43,6 +37,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Category findById(Long id) {
         return this.categoryRepository.findById(id).orElse(null);
     }

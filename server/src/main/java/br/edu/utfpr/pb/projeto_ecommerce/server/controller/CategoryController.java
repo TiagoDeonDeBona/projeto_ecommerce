@@ -70,19 +70,4 @@ public class CategoryController {
         categoryService.deleteById(id);
     }
 
-    //http://localhost:8080/categories/page?page=1&size=5
-    @GetMapping("page")
-    public ResponseEntity<Page<CategoryDTO>> findPage(@RequestParam int page,
-                                                      @RequestParam int size,
-                                                      @RequestParam(required = false) String order,
-                                                      @RequestParam(required = false) Boolean asc
-                                                      ) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        if (order != null && asc != null){
-            pageRequest = PageRequest.of(page, size, asc ? Sort.Direction.ASC : Sort.Direction.DESC, order);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(categoryService.findAll(pageRequest).map(categoryMapper::toDto));
-    }
-
-
 }

@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface ICategoryService {
     List<Category> findAll();
-    Page<Category> findAll(Pageable pageable);
     Category save(Category category);
     void deleteById(Long id);
     Category findById(Long id);
