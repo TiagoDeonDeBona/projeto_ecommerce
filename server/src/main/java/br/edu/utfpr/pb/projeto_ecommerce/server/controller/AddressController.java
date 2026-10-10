@@ -1,12 +1,15 @@
 package br.edu.utfpr.pb.projeto_ecommerce.server.controller;
 
 import br.edu.utfpr.pb.projeto_ecommerce.server.DTO.AddressDTO;
+import br.edu.utfpr.pb.projeto_ecommerce.server.DTO.ViaCepDTO;
 import br.edu.utfpr.pb.projeto_ecommerce.server.mapper.AddressMapper;
 import br.edu.utfpr.pb.projeto_ecommerce.server.model.Address;
 import br.edu.utfpr.pb.projeto_ecommerce.server.repository.AddressRepository;
 import br.edu.utfpr.pb.projeto_ecommerce.server.service.IAddressService;
+import br.edu.utfpr.pb.projeto_ecommerce.server.service.ViaCepService;
 import br.edu.utfpr.pb.projeto_ecommerce.server.shared.GenericResponse;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +22,12 @@ import java.util.stream.Collectors;
 public class AddressController {
     private final AddressMapper addressMapper;
     private final IAddressService addressService;
+    private final ViaCepService viaCepService;
 
-    public AddressController(AddressMapper addressMapper, IAddressService addressService){
+    public AddressController(AddressMapper addressMapper, IAddressService addressService, ViaCepService viaCepService){
         this.addressMapper = addressMapper;
         this.addressService = addressService;
+        this.viaCepService = viaCepService;
     }
 
     @PostMapping
@@ -77,5 +82,20 @@ public class AddressController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+
+    @GetMapping("/cep/{cep}")
+    public ResponseEntity<ViaCepDTO> consultarCep(@PathVariable String cep){
+        try { // recebe a requisição
+            ViaCepDTO endereco = viaCepService.consultarCep(cep); // tenta consultar o cep e fazer o DTO
+
+            if (endereco != null){ // se nao vier nulo
+                return ResponseEntity.status(HttpStatus.OK).body(endereco); // salva normal
+            } else {
+                return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();// ate tem o cep valido porem nao foi encontrado
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build(); // enviou o cep invalido
+        }
     }
 }
