@@ -1,0 +1,81 @@
+package br.edu.utfpr.pb.projeto_ecommerce.server.controller;
+
+import br.edu.utfpr.pb.projeto_ecommerce.server.DTO.AddressDTO;
+import br.edu.utfpr.pb.projeto_ecommerce.server.mapper.AddressMapper;
+import br.edu.utfpr.pb.projeto_ecommerce.server.model.Address;
+import br.edu.utfpr.pb.projeto_ecommerce.server.repository.AddressRepository;
+import br.edu.utfpr.pb.projeto_ecommerce.server.service.IAddressService;
+import br.edu.utfpr.pb.projeto_ecommerce.server.shared.GenericResponse;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("addresses")
+public class AddressController {
+    private final AddressMapper addressMapper;
+    private final IAddressService addressService;
+
+    public AddressController(AddressMapper addressMapper, IAddressService addressService){
+        this.addressMapper = addressMapper;
+        this.addressService = addressService;
+    }
+
+    @PostMapping
+    public ResponseEntity<GenericResponse> save(@RequestBody @Valid AddressDTO addressDTO) {
+        this.addressService.save(addressMapper.toEntity(addressDTO));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new GenericResponse("Endereço cadastrado com sucesso!"));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<GenericResponse> update(@PathVariable Long id, @RequestBody @Valid AddressDTO addressDTO){
+        Address address = addressService.update(id, addressMapper.toEntity(addressDTO));
+
+        if (address != null){
+            return ResponseEntity.status(HttpStatus.OK).body(new GenericResponse("Endereço alterado com sucesso!"));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AddressDTO>> findAll(){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                addressService.findAll()
+                        .stream()
+                        .map(addressMapper::toDTO)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<AddressDTO> findById(@PathVariable Long id){
+        Address address = addressService.findById(id);
+
+        if(address != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(addressMapper.toDTO(address));
+        } else {
+            return ResponseEntity.notFound().build(); // recomendado notFound para quando é um
+            // endereço inexistente ou nao autorizado para quele usuarioQ
+        }
+    }
+
+    @DeleteMapping("{id}") // @PathVariable pega variavel que enviamos no caminho ou seja oque vem depois do /
+    // addresses/5 -> numero 5 é o PathVariable
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        Address address = addressService.findById(id);
+
+        if (address != null) {
+            this.addressService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+}

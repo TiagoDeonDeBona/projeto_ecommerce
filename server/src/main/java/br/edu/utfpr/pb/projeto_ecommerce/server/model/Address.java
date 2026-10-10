@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "tb_address")
 @Getter
@@ -78,5 +80,17 @@ public class Address {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true; // verifica se o objeto que eu passei é igual a ele mesmo
+        if(o == null || getClass() != o.getClass()) return false; // verifica se ele nao é nulo e nao é de outra classe
+        Address address = (Address) o; // defino que é meu objeto do parametro é um endereco
+        return Objects.equals(id, address.id); // ai faço as validacoes dos ID
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(id);
+    }
 }

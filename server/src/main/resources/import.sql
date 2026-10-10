@@ -15,3 +15,10 @@ insert into tb_product(name, description, price, category_id) values ( 'Fogão 6
 
 INSERT INTO tb_user(username, email, password) VALUES ('admin', 'admin@example.com','$2a$10$.PVIfB07x.SfMYTcToxL0.yxcLWU0GbS2NUO1W1QAvqMm/TsFhVem');
 INSERT INTO tb_user(username, email, password) VALUES ('test', 'test@example.com','$2a$10$.PVIfB07x.SfMYTcToxL0.yxcLWU0GbS2NUO1W1QAvqMm/TsFhVem');
+
+insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, regiao, uf, ddd, nome_recebimento, telefone_contato) values (1, '85501000', 'Rua Tocantins', '150', 'Casa', 'Paraná', 'Pato Branco', 'Sul', 'PR', '46', 'Tiago', '46999990001');
+insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, regiao, uf, ddd, nome_recebimento, telefone_contato) values (1, '89990000', 'Rua dos Ipês', 'S/N', 'Chácara', 'Santa Catarina', 'São Lourenço do Oeste', 'Sul', 'SC', '49', 'Tiago', '49999990002');
+insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, regiao, uf, ddd, nome_recebimento, telefone_contato) values (1, '85503000', 'Rua Itacolomi', '325', 'Apartamento 2', 'Paraná', 'Pato Branco', 'Sul', 'PR', '46', 'Tiago', '46999990003');
+insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, regiao, uf, ddd, nome_recebimento, telefone_contato) values (2, '80010000', 'Rua XV de Novembro', '450', 'Casa', 'Paraná', 'Curitiba', 'Sul', 'PR', '41', 'Cliente Teste', '41999990001');
+insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, regiao, uf, ddd, nome_recebimento, telefone_contato) values (2, '88010000', 'Rua Felipe Schmidt', '200', 'Sala 3', 'Santa Catarina', 'Florianópolis', 'Sul', 'SC', '48', 'Cliente Teste', '48999990002');
+insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, regiao, uf, ddd, nome_recebimento, telefone_contato) values (2, '90010000', 'Rua dos Andradas', '780', 'Apartamento 5', 'Rio Grande do Sul', 'Porto Alegre', 'Sul', 'RS', '51', 'Cliente Teste', '51999990003');
