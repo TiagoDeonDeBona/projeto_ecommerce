@@ -53,7 +53,8 @@ public class ProductController {
         }
     }
 
-    @GetMapping
+    // tem que deixar implicito que quando ele procurar por procducts/page ai sim ele cai aqui
+    @GetMapping("page")
     public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam int page,
                                                     @RequestParam int size,
                                                     @RequestParam(required = false) String order,

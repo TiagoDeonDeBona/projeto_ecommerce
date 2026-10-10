@@ -18,12 +18,12 @@ import java.util.Objects;
 public class Category {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
     @Size(min = 2, max = 100)
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String name;
 
     // por mais que nao tenha nenhuma interface herdando diretamente a classe
