@@ -34,6 +34,7 @@ public class PedidoDTO {
 
     private BigDecimal valorTotal;
     private LocalDateTime dataPedido;
+    private BigDecimal valorFrete;
 
     @NotEmpty // exige um item para ter o pedido
     @Valid // valida os objetos que estao dentro da lista

@@ -22,3 +22,4 @@ insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, r
 insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, regiao, uf, ddd, nome_recebimento, telefone_contato) values (2, '80010000', 'Rua XV de Novembro', '450', 'Casa', 'Paraná', 'Curitiba', 'Sul', 'PR', '41', 'Cliente Teste', '41999990001');
 insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, regiao, uf, ddd, nome_recebimento, telefone_contato) values (2, '88010000', 'Rua Felipe Schmidt', '200', 'Sala 3', 'Santa Catarina', 'Florianópolis', 'Sul', 'SC', '48', 'Cliente Teste', '48999990002');
 insert into tb_address(user_id, cep, rua, numero, complemento, estado, cidade, regiao, uf, ddd, nome_recebimento, telefone_contato) values (2, '90010000', 'Rua dos Andradas', '780', 'Apartamento 5', 'Rio Grande do Sul', 'Porto Alegre', 'Sul', 'RS', '51', 'Cliente Teste', '51999990003');
+

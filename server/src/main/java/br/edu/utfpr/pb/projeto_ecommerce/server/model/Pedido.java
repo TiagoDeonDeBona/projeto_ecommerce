@@ -46,6 +46,10 @@ public class Pedido {
     @Column(nullable = false)
     private LocalDateTime dataPedido;
 
+    @NotNull
+    @Column(nullable = false)
+    private BigDecimal valorFrete;
+
     //Mappeby =  indica qual o atributo da outra classe vai representar a ligacao
     //cascade = CascadeType.ALL quando salver o pedido eu salvo tambem os itemPedido na tabela itemPedido assim nao
     //preciso de repository para o itemPedido so salva quando finaliza pedido;

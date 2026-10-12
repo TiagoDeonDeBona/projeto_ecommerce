@@ -8,6 +8,7 @@ import br.edu.utfpr.pb.projeto_ecommerce.server.model.*;
 import br.edu.utfpr.pb.projeto_ecommerce.server.repository.PedidoRepository;
 import br.edu.utfpr.pb.projeto_ecommerce.server.repository.ProductRepository;
 import br.edu.utfpr.pb.projeto_ecommerce.server.service.AuthService;
+import br.edu.utfpr.pb.projeto_ecommerce.server.service.CalcularFreteService;
 import br.edu.utfpr.pb.projeto_ecommerce.server.service.IAddressService;
 import br.edu.utfpr.pb.projeto_ecommerce.server.service.IPedidoService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,14 +29,16 @@ public class PedidoServiceImpl implements IPedidoService {
     private final ProductRepository productRepository; // busca o produto e o preco direto do banco
     private final PedidoMapper pedidoMapper; // transforma de DTO para pedido
     private final ItemPedidoMapper itemPedidoMapper; // transforma de DTO para pedido
+    private final CalcularFreteService calcularFreteService;
 
-    public PedidoServiceImpl(PedidoRepository pedidoRepository, AuthService authService, IAddressService addressService, ProductRepository productRepository, PedidoMapper pedidoMapper, ItemPedidoMapper itemPedidoMapper) {
+    public PedidoServiceImpl(PedidoRepository pedidoRepository, AuthService authService, IAddressService addressService, ProductRepository productRepository, PedidoMapper pedidoMapper, ItemPedidoMapper itemPedidoMapper, CalcularFreteService calcularFreteService) {
         this.pedidoRepository = pedidoRepository;
         this.authService = authService;
         this.addressService = addressService;
         this.productRepository = productRepository;
         this.pedidoMapper = pedidoMapper;
         this.itemPedidoMapper = itemPedidoMapper;
+        this.calcularFreteService = calcularFreteService;
     }
 
     @Override
@@ -71,10 +74,13 @@ public class PedidoServiceImpl implements IPedidoService {
         // cria o pedido atraves das informacoes do DTO
         Pedido pedido = pedidoMapper.toEntity(pedidoDTO);
 
+        BigDecimal valorFrete = calcularFreteService.consultarFrete(address.getCep());
+
         pedido.setUser(user);
         pedido.setAddress(address);
         pedido.setDataPedido(LocalDateTime.now());
         pedido.setItemPedido(new ArrayList<>());
+        pedido.setValorFrete(valorFrete);
 
         // tem que definir e atribuir o valor zerado pois ele começa null
         // nao tem como somarmos o null + valor do item
@@ -109,6 +115,7 @@ public class PedidoServiceImpl implements IPedidoService {
             valorTotal = valorTotal.add(subTotal);
         }
         pedido.setValorTotal(valorTotal);
+        pedido.setValorTotal((valorTotal.add(valorFrete)));
 
         return pedidoRepository.save(pedido);
     }

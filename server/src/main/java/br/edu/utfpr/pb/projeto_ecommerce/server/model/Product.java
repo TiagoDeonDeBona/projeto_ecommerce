@@ -2,6 +2,8 @@ package br.edu.utfpr.pb.projeto_ecommerce.server.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -32,7 +34,8 @@ public class Product {
     @Column(length = 100)
     private String description;
 
-    @NotBlank
+    @NotNull
+    @Positive
     private BigDecimal price;
 
     @ManyToOne
