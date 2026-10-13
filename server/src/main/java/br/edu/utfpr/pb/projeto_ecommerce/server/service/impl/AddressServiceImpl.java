@@ -34,7 +34,10 @@ public class AddressServiceImpl implements IAddressService {
         // aqui o (User) entre parenteses é por conta que o authService retorna um UserDetails estamos fazendo a conversao para um User normal.
 
         // Garanto que o post para Address seja tratado sempre como um novo cadastro
-        address.setId(null);
+        // para nao permitir salvar encima de endereços existentes
+        // como o id é gerado automaticamente por padrao ele é nulo porem se eu nao insiro ele como null aqui e o
+        // usuario passar endereco por parametro ele pode substituir um enderec oexistentes
+        address.setId(null); // new RequestDto
 
         // associo o usuario autenticado para o endereço
         address.setUser(user);
