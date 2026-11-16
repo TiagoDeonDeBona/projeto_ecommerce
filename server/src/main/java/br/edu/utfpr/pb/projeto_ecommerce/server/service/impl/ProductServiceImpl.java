@@ -27,6 +27,12 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Product> findByCategory(Long idCategory) {
+        return productRepository.findAllProductsByCategoryId(idCategory);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Page<Product> findAll(Pageable pageable) {
         return this.productRepository.findAll(pageable);
     }

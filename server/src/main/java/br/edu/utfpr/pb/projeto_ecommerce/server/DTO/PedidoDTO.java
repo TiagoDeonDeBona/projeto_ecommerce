@@ -1,6 +1,7 @@
 package br.edu.utfpr.pb.projeto_ecommerce.server.DTO;
 
 import br.edu.utfpr.pb.projeto_ecommerce.server.model.Address;
+import br.edu.utfpr.pb.projeto_ecommerce.server.model.EnderecoPedido;
 import br.edu.utfpr.pb.projeto_ecommerce.server.model.ItemPedido;
 import br.edu.utfpr.pb.projeto_ecommerce.server.model.User;
 import jakarta.persistence.*;
@@ -35,7 +36,8 @@ public class PedidoDTO {
     private BigDecimal valorTotal;
     private LocalDateTime dataPedido;
     private BigDecimal valorFrete;
-
+    private EnderecoPedidoDTO enderecoPedido;
+    
     @NotEmpty // exige um item para ter o pedido
     @Valid // valida os objetos que estao dentro da lista
     private List<ItemPedidoDTO> itemPedido = new ArrayList<>();

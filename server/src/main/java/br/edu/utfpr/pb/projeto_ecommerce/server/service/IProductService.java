@@ -9,6 +9,8 @@ import java.util.List;
 public interface IProductService {
     List<Product> findAll();
 
+    List<Product> findByCategory(Long idCategory);
+
     Page<Product> findAll(Pageable pageable);
 
     Product findById(Long id);

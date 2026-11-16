@@ -114,7 +114,7 @@ public class WebSecurity {
                 .requestMatchers("/error/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/products/**").permitAll()
-                .requestMatchers("/categories/**").permitAll()
+                .requestMatchers(HttpMethod.GET,"/categories/**").permitAll()
                 // Aqui para todas as rotas.
                 // o ** significa para todos niveis abaixos exemplo
                 // /users /users/tiago

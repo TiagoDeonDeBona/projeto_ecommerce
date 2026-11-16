@@ -29,9 +29,9 @@ public class Pedido {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address address;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_pedido_id", nullable = false)
+    private EnderecoPedido enderecoPedido;
 
     @NotBlank
     @Size(min = 3, max = 20)

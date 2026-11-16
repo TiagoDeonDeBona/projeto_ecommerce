@@ -62,12 +62,4 @@ public class CategoryController {
         }
     }
 
-    @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // Status 204 de quando a exclusao deu certa
-    // como ele fez aqui para dar a resposta da API nao precisa fazer ResponseEntity, porem dava para fazer da mesma forma
-    // com response entity ou com GenericResponse
-    public void delete(@PathVariable Long id){
-        categoryService.deleteById(id);
-    }
-
 }

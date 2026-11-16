@@ -2,6 +2,7 @@ package br.edu.utfpr.pb.projeto_ecommerce.server.service.impl;
 
 import br.edu.utfpr.pb.projeto_ecommerce.server.DTO.ItemPedidoDTO;
 import br.edu.utfpr.pb.projeto_ecommerce.server.DTO.PedidoDTO;
+import br.edu.utfpr.pb.projeto_ecommerce.server.mapper.EnderecoPedidoMapper;
 import br.edu.utfpr.pb.projeto_ecommerce.server.mapper.ItemPedidoMapper;
 import br.edu.utfpr.pb.projeto_ecommerce.server.mapper.PedidoMapper;
 import br.edu.utfpr.pb.projeto_ecommerce.server.model.*;
@@ -30,8 +31,9 @@ public class PedidoServiceImpl implements IPedidoService {
     private final PedidoMapper pedidoMapper; // transforma de DTO para pedido
     private final ItemPedidoMapper itemPedidoMapper; // transforma de DTO para pedido
     private final CalcularFreteService calcularFreteService;
+    private final EnderecoPedidoMapper enderecoPedidoMapper;
 
-    public PedidoServiceImpl(PedidoRepository pedidoRepository, AuthService authService, IAddressService addressService, ProductRepository productRepository, PedidoMapper pedidoMapper, ItemPedidoMapper itemPedidoMapper, CalcularFreteService calcularFreteService) {
+    public PedidoServiceImpl(PedidoRepository pedidoRepository, AuthService authService, IAddressService addressService, ProductRepository productRepository, PedidoMapper pedidoMapper, ItemPedidoMapper itemPedidoMapper, CalcularFreteService calcularFreteService, EnderecoPedidoMapper enderecoPedidoMapper) {
         this.pedidoRepository = pedidoRepository;
         this.authService = authService;
         this.addressService = addressService;
@@ -39,6 +41,7 @@ public class PedidoServiceImpl implements IPedidoService {
         this.pedidoMapper = pedidoMapper;
         this.itemPedidoMapper = itemPedidoMapper;
         this.calcularFreteService = calcularFreteService;
+        this.enderecoPedidoMapper = enderecoPedidoMapper;
     }
 
     @Override
@@ -73,11 +76,15 @@ public class PedidoServiceImpl implements IPedidoService {
 
         // cria o pedido atraves das informacoes do DTO
         Pedido pedido = pedidoMapper.toEntity(pedidoDTO);
+        // cria copia do endereco cadastrado
+        EnderecoPedido enderecoPedido = enderecoPedidoMapper.toEntity(address);
+        // associa a copia ao pedido
+        pedido.setEnderecoPedido(enderecoPedido);
 
         BigDecimal valorFrete = calcularFreteService.consultarFrete(address.getCep());
 
         pedido.setUser(user);
-        pedido.setAddress(address);
+        pedido.setEnderecoPedido(enderecoPedido);
         pedido.setDataPedido(LocalDateTime.now());
         pedido.setItemPedido(new ArrayList<>());
         pedido.setValorFrete(valorFrete);
